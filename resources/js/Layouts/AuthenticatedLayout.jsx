@@ -19,8 +19,8 @@ export default function AuthenticatedLayout({ header, children }) {
         },
         {
             name: 'Users',
-            href: route('dashboard'),
-            active: route().current('dashboard'),
+            href: route('users'),
+            active: route().current('users'),
         },
         {
             name: 'Absensi',
