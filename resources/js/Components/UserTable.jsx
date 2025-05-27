@@ -1,59 +1,87 @@
 import Pagination from "@/Components/Pagination";
-import { Link } from "@inertiajs/react";
+import { Link, useForm } from "@inertiajs/react";
 import React from "react";
 
 export default function UserTable({ users }) {
-    console.log(users);
+    const { data, setData, get } = useForm({ search: "" });
+
+    const handleSearch = (e) => {
+        e.preventDefault();
+        get(route("users"), { preserveState: true });
+    };
     return (
         <>
-                <div className="flex justify-between items-center mb-3 px-2 py-2">
-                    <label className="text-lg text-left font-bold text-gray-700  tracking-wider">
-                        ({users.total}) Users
-                    </label>
+            <div className="flex justify-between items-center mb-4">
+                <label className="text-lg font-bold text-gray-700 tracking-wider">
+                    ({users.total}) Users
+                </label>
+
+                <div className="flex items-center space-x-2">
+                    <form
+                        onSubmit={handleSearch}
+                        className="flex items-center space-x-2"
+                    >
+                        <input
+                            type="text"
+                            name="search"
+                            value={data.search}
+                            onChange={(e) => setData("search", e.target.value)}
+                            placeholder="Search users..."
+                            className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-amber-500 "
+                        />
+                        <button
+                            type="submit"
+                            className="px-4 py-2 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700"
+                        >
+                            Search
+                        </button>
+                    </form>
                     <Link
                         href={route("users.create")}
-                        className="px-4 py-2 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+                        className="px-4 py-2 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700 "
                     >
                         Add User
                     </Link>
                 </div>
-                <table className="min-w-full divide-gray-200">
-                    <thead className="bg-gray-100">
-                        <tr>
-                            <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
-                                ID
-                            </th>
-                            <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
-                                Name
-                            </th>
-                            <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
-                                Email
-                            </th>
-                            <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
-                                Role
-                            </th>
+            </div>
+            
+            <table className="min-w-full divide-gray-200">
+                <thead className="bg-gray-100">
+                    <tr>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                            ID
+                        </th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                            Name
+                        </th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                            Email
+                        </th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                            Role
+                        </th>
+                    </tr>
+                </thead>
+                <tbody className="bg-white divide-y divide-gray-200">
+                    {users.data.map(({ id, name, email }) => (
+                        <tr key={id}>
+                            <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
+                                {id}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
+                                {name}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
+                                {email}
+                            </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
+                                {/* {role || } */ "N/A"}
+                            </td>
                         </tr>
-                    </thead>
-                    <tbody className="bg-white divide-y divide-gray-200">
-                        {users.data.map(({ id, name, email }) => (
-                            <tr key={id}>
-                                <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
-                                    {id}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
-                                    {name}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
-                                    {email}
-                                </td>
-                                <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
-                                    {/* {role || } */ "N/A"}
-                                </td>
-                            </tr>
-                        ))}
-                    </tbody>
-                </table>
-                <Pagination links={users.links} />
+                    ))}
+                </tbody>
+            </table>
+            <Pagination links={users.links} />
         </>
     );
 }
