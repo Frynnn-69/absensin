@@ -6,6 +6,7 @@ import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
+import Selectbox from "@/Components/SelectBox";
 
 export default function UserCreate({ auth }) {
 
@@ -13,6 +14,7 @@ export default function UserCreate({ auth }) {
         useForm({
             name: "",
             email: "",
+            role: "user", // Default role 
             password: "",
             password_confirmation: "",
         });
@@ -89,6 +91,30 @@ export default function UserCreate({ auth }) {
                                         onChange={(e) =>
                                             setData("email", e.target.value)
                                         }
+                                    />
+                                    <InputError
+                                        message={errors.email}
+                                        className="mt-2"
+                                    />
+                                </div>
+
+                                <div>
+                                    <InputLabel htmlFor="role" value="Role" />
+                                    <Selectbox 
+                                        id="role"
+                                        name="role"
+                                        currentValue={data.role}
+                                        className="mt-1 block w-full"
+                                        onChange={(e) =>
+                                            setData("role", e.target.value)
+                                        }
+                                        options={
+                                            [
+                                                { value: "admin", label: "Admin" },
+                                                { value: "user", label: "User" },
+                                            ]
+                                        }
+                                        
                                     />
                                     <InputError
                                         message={errors.email}
