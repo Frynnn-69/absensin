@@ -44,7 +44,7 @@ export default function UserTable({ users }) {
                     </Link>
                 </div>
             </div>
-            
+
             <table className="min-w-full divide-gray-200">
                 <thead className="bg-gray-100">
                     <tr>
@@ -63,7 +63,7 @@ export default function UserTable({ users }) {
                     </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                    {users.data.map(({ id, name, email }) => (
+                    {users.data.map(({ id, name, email, role }) => (
                         <tr key={id}>
                             <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
                                 {id}
@@ -75,7 +75,21 @@ export default function UserTable({ users }) {
                                 {email}
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
-                                {/* {role || } */ "N/A"}
+                                <div>
+                                    {role === "admin" ? (
+                                        <span className="px-2 py-1 text-sm font-bold text-white bg-red-400 rounded">
+                                            Admin
+                                        </span>
+                                    ) : role === "user" ? (
+                                        <span className="px-2 py-1 text-sm font-bold text-white bg-emerald-400 rounded">
+                                            User
+                                        </span>
+                                    ) : (
+                                        <span className="px-2 py-1 text-sm font-bold text-gray-700 bg-gray-300 rounded">
+                                            {role}
+                                        </span>
+                                    )}
+                                </div>
                             </td>
                         </tr>
                     ))}
