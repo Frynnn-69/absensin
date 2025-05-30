@@ -24,6 +24,7 @@
     "dependencies": {
         "@heroicons/react": "^2.2.0",
         "@tanstack/react-table": "^8.21.3",
-        "he": "^1.2.0"
+        "he": "^1.2.0",
+        "react-tooltip": "^5.28.1"
     }
 }

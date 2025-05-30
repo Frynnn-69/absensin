@@ -5,7 +5,12 @@ import PrimaryButton, {
 } from "@/Components/PrimaryButton";
 import { Link, useForm } from "@inertiajs/react";
 import React from "react";
-import { PencilSquareIcon, UserPlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import {
+    PencilSquareIcon,
+    UserPlusIcon,
+    MagnifyingGlassIcon,
+} from "@heroicons/react/24/outline";
+import { Tooltip } from "react-tooltip";
 
 export default function UserTable({ users }) {
     const { data, setData, get } = useForm({ search: "" });
@@ -41,10 +46,12 @@ export default function UserTable({ users }) {
                     <Link
                         href={route("users.create")}
                         className={primaryButtonClassName}
+                        data-tooltip-id="add-user-tooltip"
+                        data-tooltip-content="Add User"
                     >
                         <UserPlusIcon className="h-3 w-3 text-white" />
-                        
                     </Link>
+                    <Tooltip id="add-user-tooltip" />
                 </div>
             </div>
 
@@ -101,9 +108,12 @@ export default function UserTable({ users }) {
                                 <Link
                                     href={route("users.edit", id)}
                                     className={dangerButtonClassName}
+                                                  data-tooltip-id="edit-user-tooltip"
+                        data-tooltip-content="Edit User"
                                 >
                                     <PencilSquareIcon className="h-3 w-3 text-white" />
                                 </Link>
+                                <Tooltip id="edit-user-tooltip" />
                             </td>
                         </tr>
                     ))}
