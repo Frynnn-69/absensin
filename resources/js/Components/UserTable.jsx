@@ -1,6 +1,11 @@
+import { dangerButtonClassName } from "@/Components/DangerButton";
 import Pagination from "@/Components/Pagination";
+import PrimaryButton, {
+    primaryButtonClassName,
+} from "@/Components/PrimaryButton";
 import { Link, useForm } from "@inertiajs/react";
 import React from "react";
+import { PencilSquareIcon, UserPlusIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 
 export default function UserTable({ users }) {
     const { data, setData, get } = useForm({ search: "" });
@@ -12,7 +17,7 @@ export default function UserTable({ users }) {
     return (
         <>
             <div className="flex justify-between items-center mb-4">
-                <label className="text-lg font-bold text-gray-700 tracking-wider">
+                <label className="text-base font-bold text-gray-700 tracking-wider">
                     ({users.total}) Users
                 </label>
 
@@ -27,20 +32,18 @@ export default function UserTable({ users }) {
                             value={data.search}
                             onChange={(e) => setData("search", e.target.value)}
                             placeholder="Search users..."
-                            className="px-4 py-2 border border-gray-300 rounded-md text-sm focus:ring-amber-500 "
+                            className="px-2 py-1 border border-gray-300 rounded-md text-sm "
                         />
-                        <button
-                            type="submit"
-                            className="px-4 py-2 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700"
-                        >
-                            Search
-                        </button>
+                        <PrimaryButton type="submit">
+                            <MagnifyingGlassIcon className="h-3 w-3 text-white" />
+                        </PrimaryButton>
                     </form>
                     <Link
                         href={route("users.create")}
-                        className="px-4 py-2 bg-amber-600 text-white font-bold rounded-md hover:bg-amber-700 "
+                        className={primaryButtonClassName}
                     >
-                        Add User
+                        <UserPlusIcon className="h-3 w-3 text-white" />
+                        
                     </Link>
                 </div>
             </div>
@@ -59,6 +62,9 @@ export default function UserTable({ users }) {
                         </th>
                         <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
                             Role
+                        </th>
+                        <th className="px-6 py-3 text-left text-sm font-bold text-gray-700 uppercase tracking-wider">
+                            &nbsp;
                         </th>
                     </tr>
                 </thead>
@@ -91,6 +97,14 @@ export default function UserTable({ users }) {
                                     )}
                                 </div>
                             </td>
+                            <td className="px-6 py-4 whitespace-nowrap text-base text-gray-900">
+                                <Link
+                                    href={route("users.edit", id)}
+                                    className={dangerButtonClassName}
+                                >
+                                    <PencilSquareIcon className="h-3 w-3 text-white" />
+                                </Link>
+                            </td>
                         </tr>
                     ))}
                 </tbody>
@@ -99,61 +113,3 @@ export default function UserTable({ users }) {
         </>
     );
 }
-
-// use if need more features like sorting, filtering, etc.
-// import React from 'react';
-// import { useTable } from '@tanstack/react-table';
-
-// const UserTable = ({ users }) => {
-//     const columns = React.useMemo(
-//         () => [
-//             { Header: 'ID', accessor: 'id' },
-//             { Header: 'Name', accessor: 'name' },
-//             { Header: 'Email', accessor: 'email' },
-//             { Header: 'Role', accessor: 'role' },
-//         ],
-//         []
-//     );
-
-//     const tableInstance = useTable({ columns, data: users });
-
-//     const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = tableInstance;
-
-//     return (
-//         <table {...getTableProps()} className="min-w-full divide-y divide-gray-200">
-//             <thead className="bg-gray-50">
-//                 {headerGroups.map((headerGroup) => (
-//                     <tr {...headerGroup.getHeaderGroupProps()}>
-//                         {headerGroup.headers.map((column) => (
-//                             <th
-//                                 {...column.getHeaderProps()}
-//                                 className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"
-//                             >
-//                                 {column.render('Header')}
-//                             </th>
-//                         ))}
-//                     </tr>
-//                 ))}
-//             </thead>
-//             <tbody {...getTableBodyProps()} className="bg-white divide-y divide-gray-200">
-//                 {rows.map((row) => {
-//                     prepareRow(row);
-//                     return (
-//                         <tr {...row.getRowProps()}>
-//                             {row.cells.map((cell) => (
-//                                 <td
-//                                     {...cell.getCellProps()}
-//                                     className="px-6 py-4 whitespace-nowrap text-sm text-gray-900"
-//                                 >
-//                                     {cell.render('Cell')}
-//                                 </td>
-//                             ))}
-//                         </tr>
-//                     );
-//                 })}
-//             </tbody>
-//         </table>
-//     );
-// };
-
-// export default UserTable;
