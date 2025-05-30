@@ -7,6 +7,7 @@ import PrimaryButton from "@/Components/PrimaryButton";
 import TextInput from "@/Components/TextInput";
 import { Transition } from "@headlessui/react";
 import Selectbox from "@/Components/SelectBox";
+import roles from "@/data/roles.json"
 
 export default function UserEdit({ user, auth }) {
 
@@ -108,12 +109,7 @@ export default function UserEdit({ user, auth }) {
                                         onChange={(e) =>
                                             setData("role", e.target.value)
                                         }
-                                        options={
-                                            [
-                                                { value: "admin", label: "Admin" },
-                                                { value: "user", label: "User" },
-                                            ]
-                                        }
+                                        options={roles}
                                         
                                     />
                                     <InputError
