@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AttendanceController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Foundation\Application;
@@ -28,6 +29,7 @@ Route::middleware(['auth', 'admin'])->group(function (){
 });
 
 Route::middleware('auth')->group(function () {
+    Route::post('/attendance/store', [AttendanceController::class, 'store'])->name('attendance.store');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
