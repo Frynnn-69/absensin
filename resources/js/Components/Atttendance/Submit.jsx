@@ -12,10 +12,10 @@ import { useEffect } from "react";
 export default function SubmitAttendance() {
     const { data, setData, post, errors, processing, recentlySuccessful } =
         useForm({
-            status: "present", 
+            status: "present",
             description: "",
-            latitude: null, 
-            longitude: null, 
+            latitude: null,
+            longitude: null,
         });
 
     const handleSubmit = (e) => {
@@ -25,12 +25,11 @@ export default function SubmitAttendance() {
             onSuccess: () => {
                 console.log("Attendance submitted successfully!");
             },
-            onError: () => {
-                console.error("Error submitting attendance:", errors);
+            onError: (errors) => {
+                console.error(errors);
             },
         });
     };
-    
 
     useEffect(() => {
         if ("geolocation" in navigator) {
@@ -63,7 +62,7 @@ export default function SubmitAttendance() {
                         longitude: "0.000000",
                     }));
                 },
-                { timeout: 10000 } 
+                { timeout: 10000 }
             );
         }
     }, []);
@@ -94,7 +93,10 @@ export default function SubmitAttendance() {
                                     name="status"
                                     value={data.status}
                                     onChange={(e) =>
-                                        setData({ ...data, status: e.target.value })
+                                        setData({
+                                            ...data,
+                                            status: e.target.value,
+                                        })
                                     }
                                     options={[
                                         { value: "present", label: "Hadir" },
@@ -113,7 +115,6 @@ export default function SubmitAttendance() {
                                     message={errors.status}
                                     className="mt-2"
                                 />
-
 
                                 <Transition
                                     show={data.status !== "present"}
