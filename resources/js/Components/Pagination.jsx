@@ -1,14 +1,14 @@
 import { Link } from "@inertiajs/react";
 import he from "he";
 
-export default function Pagination({ links }) {
+export default function Pagination({ links, total, label = "result(s)" }) {
     return (
         links.length > 0 && (
             <nav className="flex items-center justify-between mt-4" aria-label="Pagination">
                 <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
                     <div>
                         <p className="text-sm text-gray-700">
-                            Showing of {links.length} results
+                            Showing of {total} results
                         </p>
                     </div>
                     <div className="flex space-x-2">

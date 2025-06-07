@@ -119,7 +119,7 @@ export default function UserTable({ users }) {
                     ))}
                 </tbody>
             </table>
-            <Pagination links={users.links} />
+            <Pagination links={users.links} total={users.total} />
         </>
     );
 }
