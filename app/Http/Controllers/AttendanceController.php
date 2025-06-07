@@ -6,9 +6,30 @@ use App\Models\Attendance;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Inertia;
 
 class AttendanceController extends Controller
 {
+
+    public function index(Request $request)
+{
+    $query = Attendance::with('user'); 
+
+    if ($request->has('search')) {
+        $query->where('status', 'like', '%' . $request->search . '%')
+              ->orWhereHas('user', function ($q) use ($request) {
+                  $q->where('name', 'like', '%' . $request->search . '%'); // Cari berdasarkan nama pengguna
+              });
+    }
+
+    $attendances = $query->paginate(10);
+
+    return Inertia::render('Absen/Index', [
+        'attendances' => $attendances,
+    ]);
+}
+
+
     public function store(Request $request)
     {
         $request->validate([
