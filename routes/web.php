@@ -27,6 +27,7 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/users/store', [UserController::class, 'store'])->name('users.store');
     Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
     Route::patch('/users/update/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::get('/attendance', [AttendanceController::class, 'index'])->name('attendance');
 });
 
 Route::middleware('auth')->group(function () {
